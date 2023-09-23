@@ -17,13 +17,13 @@ export default function Home() {
 		<main className="flex min-h-screen items-center justify-center p-24 bg-black antialiased">
 			<div>
 				<h1 className="text-6xl text-center font-bold text-white">
-					Out–invest <br /> your friends
+					Out-trade friends. <br /> Claim victory.
 				</h1>
 				<div className="flex items-center justify-center space-x-4 mt-8">
 					<motion.button
 						whileTap={buttonClick}
 						whileHover={buttonHover}
-						className="p-4 rounded-lg bg-[#1A1A1A] text-sm text-white uppercase tracking-wider"
+						className="p-4 rounded-lg bg-[#1A1A1A] text-xs font-semibold text-white uppercase tracking-wider"
 					>
 						{' '}
 						Create Game{' '}
@@ -31,7 +31,7 @@ export default function Home() {
 					<motion.button
 						whileTap={buttonClick}
 						whileHover={buttonHover}
-						className="p-4 rounded-lg bg-[#3B6D82] text-sm text-white uppercase tracking-wider"
+						className="p-4 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
 					>
 						{' '}
 						Join Game{' '}
