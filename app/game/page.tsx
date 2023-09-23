@@ -1,9 +1,8 @@
-export default function Home() {
+export default function Game() {
 	return (
 		<main className="flex min-h-screen items-center justify-center p-24">
 			<div>
-				<h1>Pedestal</h1>
-				<button> Create Game </button>
+				<h1>Game page</h1>
 			</div>
 		</main>
 	);
