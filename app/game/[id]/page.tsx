@@ -71,24 +71,30 @@ export default function Game({ params }: { params: { id: string } }) {
 				<br />
 				{authenticated && <button onClick={logout}> Logout </button>}
 			</div>
-			<div className="w-full text-white">
+			<div className="w-full text-white flex justify-between mt-12">
 				<p> Stake Amount: {game?.stakeAmount + ' ETH'}</p>
 				<p> Balance to Start: {game?.balanceToStart + ' ETH'} </p>
+				<p> Balance to Start: {game?.duration + ' hours'} </p>
 			</div>
 			<div className="w-full flex space-x-4 text-white mt-6">
 				<div className="w-1/2">
 					<p> Leaderboard </p>
-					<div className="w-full h-[500px] bg-white/10 rounded-md"></div>
+					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
 				</div>
 				<div className="w-1/2">
 					<p> Chat </p>
-					<div className="w-full h-[500px] bg-white/10 rounded-md"></div>
+					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
 				</div>
 			</div>
 			]
-			<div className="w-full text-white mt-6">
-				<div className="w-full">
+			<div className="w-full flex space-x-4 text-white mt-6">
+				<div className="w-1/2">
+					<p> Exchange </p>
+					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
+				</div>
+				<div className="w-1/2">
 					<p> Activity </p>
+					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
 				</div>
 			</div>
 		</main>
