@@ -1,7 +1,8 @@
-const baseURL = 'https://pedestal-backend.vercel.app/v1/';
+const baseURL = 'https://pedestal-backend.vercel.app/v1';
 
 const endpoints = {
-	createGame: `${baseURL}/v1/createGame`,
+	createGame: `${baseURL}/createGame`,
+	manageGame: `${baseURL}/manageGame`,
 };
 
 export default endpoints;

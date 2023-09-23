@@ -6,13 +6,16 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function CreateGame() {
-	const [duration, setDuration] = useState(12);
+	const [duration, setDuration] = useState(24);
 	const [gameName, setGameName] = useState('');
 	const [maxPlayers, setMaxPlayers] = useState(4);
 	const [stakeAmount, setStakeAmount] = useState(1);
 	const [balanceToStart, setBalanceToStart] = useState(1);
+
+	const router = useRouter();
 
 	const handleCreateGame = async () => {
 		// check if title is empty
@@ -45,14 +48,32 @@ export default function CreateGame() {
 			return;
 		}
 
-		const response = await axios.post(endpoints.createGame, {
+		const reqObj = {
 			duration,
 			gameName,
 			maxPlayers,
 			stakeAmount,
 			balanceToStart,
+		};
+
+		console.log(endpoints.createGame, reqObj);
+
+		const response = await axios.post(endpoints.createGame, reqObj, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		});
-		console.log(response);
+
+		console.log(response.data);
+
+		if (response.data.gameId) {
+			toast.loading('Game created successfully! Redirecting you...');
+			setTimeout(() => {
+				router.push(`/game/${response.data.gameId}`);
+			}, 2000);
+		} else {
+			toast.error('Something went wrong. Please try again.');
+		}
 
 		// get the form ID and redirect to the game page
 	};
@@ -63,13 +84,17 @@ export default function CreateGame() {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					console.log('submitted');
 					handleCreateGame();
 				}}
 			>
 				<div className="flex space-x-8">
 					<div id="left" className="space-y-12">
-						<div className="flex flex-col">
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.1 }}
+							className="flex flex-col"
+						>
 							<label className="text-white font-bold">Game Name</label>
 							<motion.input
 								className="bg-transparent mt-4 text-white text-3xl placeholder-white/20 outline-none focus-within:outline-none focus:outline-none active:outline-none"
@@ -78,31 +103,64 @@ export default function CreateGame() {
 								value={gameName}
 								onChange={(e) => setGameName(e.target.value)}
 							/>
-						</div>
-						<div className="flex flex-col mt-4">
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.1 }}
+							className="flex flex-col mt-4"
+						>
 							<label className="text-white font-bold">Max Players</label>
 							<input
 								className="bg-transparent mt-4 text-white text-3xl placeholder-white/10 outline-none focus-within:outline-none focus:outline-none active:outline-none"
 								placeholder="4"
 								type="number"
-								step={0.1}
-								min={0}
+								step={1}
+								min={2}
 								value={maxPlayers}
 								onChange={(e) => {
 									const value = parseInt(e.target.value);
 									if (!isNaN(value)) {
 										setMaxPlayers(value);
+									} else {
+										setMaxPlayers(2);
 									}
 								}}
 							/>
-						</div>
-						<div className="flex flex-col mt-4">
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.15 }}
+							className="flex flex-col mt-4"
+						>
 							<label className="text-white font-bold">Duration: {duration} hours </label>
-							<Slider className="mt-4" defaultValue={[duration]} max={60} min={6} step={4} onValueChange={(values) => setDuration(values[0])} />
-						</div>
+							<Slider
+								className="mt-4 w-1/2"
+								defaultValue={[duration]}
+								max={60}
+								min={6}
+								step={4}
+								onValueChange={(values) => setDuration(values[0])}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.15 }}
+							className="flex flex-col mt-4"
+						>
+							<label className="text-white font-bold">Game Type</label>
+							<p className="uppercase mt-3 font-medium text-xs w-1/2 tracking-widest py-2 rounded-md inline-block">🏆 – Winner takes all</p>
+						</motion.div>
 					</div>
 					<div className="space-y-12" id="right">
-						<div className="flex flex-col">
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.1 }}
+							className="flex flex-col"
+						>
 							<label className="text-white font-bold">Stake Amount</label>
 							<div className="flex items-end justify-start">
 								<input
@@ -116,6 +174,8 @@ export default function CreateGame() {
 										const value = parseFloat(e.target.value);
 										if (!isNaN(value)) {
 											setStakeAmount(value);
+										} else {
+											setStakeAmount(0);
 										}
 									}}
 								/>
@@ -123,8 +183,13 @@ export default function CreateGame() {
 									<span> ETH </span>
 								</div>
 							</div>
-						</div>
-						<div className="flex flex-col mt-4">
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.2, delay: 0.1 }}
+							className="flex flex-col mt-4"
+						>
 							<label className="text-white font-bold">Starting Balance</label>
 							<div className="flex items-end justify-start">
 								<input
@@ -138,6 +203,8 @@ export default function CreateGame() {
 										const value = parseFloat(e.target.value);
 										if (!isNaN(value)) {
 											setBalanceToStart(value);
+										} else {
+											setBalanceToStart(0);
 										}
 									}}
 								/>
@@ -145,18 +212,21 @@ export default function CreateGame() {
 									<span> ETH </span>
 								</div>
 							</div>
-						</div>
-						<div className="flex flex-col mt-4">
-							<label className="text-white font-bold">Game Type</label>
-
-							<p className="uppercase mt-3 text-xs tracking-widest px-3 py-2 bg-white/10 rounded-md">Winner takes all</p>
-						</div>
+						</motion.div>
 					</div>
 				</div>
-				<div className="mt-6">
-					<button type="submit" className="px-3 py-2 bg-white/10 text-white rounded-sm w-full">
+				<div className="mt-12 w-full">
+					<motion.button
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.2 } }}
+						whileTap={{ scale: 0.9 }}
+						whileHover={{ scale: 1.1 }}
+						transition={{ duration: 0.1 }}
+						type="submit"
+						className="px-3 py-4 bg-[#3B6D82] text-sm text-white rounded-sm w-1/2"
+					>
 						Create Game
-					</button>
+					</motion.button>
 				</div>
 			</form>
 		</main>

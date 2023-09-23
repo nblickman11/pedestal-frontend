@@ -24,7 +24,7 @@ export default function Home() {
 		<main className="flex min-h-screen items-center justify-center p-24 bg-black antialiased">
 			<div>
 				<h1 className="text-6xl text-center font-bold text-white">
-					Out-trade friends. <br /> Claim victory.
+					Outperform friends. <br /> Claim victory.
 				</h1>
 				<div className="flex items-center justify-center space-x-4 mt-8">
 					<motion.button
