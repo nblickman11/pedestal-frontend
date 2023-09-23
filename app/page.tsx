@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const buttonClick = {
 	scale: 0.9,
@@ -13,6 +14,12 @@ const buttonHover = {
 };
 
 export default function Home() {
+	const router = useRouter();
+
+	const handleCreateGame = () => {
+		router.push('/create');
+	};
+
 	return (
 		<main className="flex min-h-screen items-center justify-center p-24 bg-black antialiased">
 			<div>
@@ -21,6 +28,7 @@ export default function Home() {
 				</h1>
 				<div className="flex items-center justify-center space-x-4 mt-8">
 					<motion.button
+						onClick={handleCreateGame}
 						whileTap={buttonClick}
 						whileHover={buttonHover}
 						className="p-4 rounded-lg bg-[#1A1A1A] text-xs font-semibold text-white uppercase tracking-wider"
