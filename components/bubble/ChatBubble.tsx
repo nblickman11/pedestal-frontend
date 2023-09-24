@@ -17,7 +17,7 @@ const AuthorWrapper = ({ children }: { children: any }) => {
 };
 
 const ChatContainer = ({ children }: { children: any }) => {
-	return <div className="flex flex-col w-full h-full bg-black">{children}</div>;
+	return <div className="flex min-h-[400px] flex-col w-full h-full bg-black">{children}</div>;
 };
 
 const ChatButton = ({ children }: { children: any }) => {
@@ -29,7 +29,7 @@ const ChatButton = ({ children }: { children: any }) => {
 			whileTap={{
 				scale: 0.9,
 			}}
-			className="p-4 mt-36 m-auto w-1/2 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
+			className="p-4 mt-12 m-auto w-1/2 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
 		>
 			{children}
 		</motion.button>

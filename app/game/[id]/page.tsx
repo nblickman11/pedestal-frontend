@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { ethers } from 'ethers';
 import Home from '@/components/ui/Home';
+import Leaderboard from '@/components/leaderboard/Leaderboard';
 
 type Game = {
 	balanceToStart: number;
@@ -103,7 +104,7 @@ export default function Game({ params }: { params: { id: string } }) {
 				});
 
 				console.log('Player Joined:', data);
-
+				setGame(data.data);
 				toast.success('Joined Game!');
 			} catch (error) {
 				console.error('Error sending transaction:', error);
@@ -117,25 +118,35 @@ export default function Game({ params }: { params: { id: string } }) {
 		// Do nothing while the PrivyProvider initializes with updated user state
 		return (
 			<div className="flex items-center justify-center min-h-screen bg-black">
-				<div> Loading</div>
+				<div> Loading </div>
 			</div>
 		);
 	}
+
+	const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === 'privy');
 
 	return (
 		<main className="min-h-screen p-24 bg-black ">
 			<div className="flex items-center justify-center space-x-4 text-white">
 				<h1 className="text-2xl uppercase">{game?.gameName}</h1>
 				{authenticated ? (
-					<motion.button
-						onClick={handleJoinGame}
-						whileTap={buttonClick}
-						whileHover={buttonHover}
-						className="p-2 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
-					>
-						{' '}
-						Join Contest{' '}
-					</motion.button>
+					//@ts-ignore
+					game?.players?.includes(embeddedWallet?.address) ? (
+						<button disabled className="p-2 rounded-lg bg-[#115d40] text-xs font-semibold text-white uppercase tracking-wider">
+							{' '}
+							Joined{' '}
+						</button>
+					) : (
+						<motion.button
+							onClick={handleJoinGame}
+							whileTap={buttonClick}
+							whileHover={buttonHover}
+							className="p-2 rounded-lg bg-[#948a23] text-xs font-semibold text-white uppercase tracking-wider"
+						>
+							{' '}
+							Join Contest{' '}
+						</motion.button>
+					)
 				) : (
 					<button onClick={privyLogin}> Connect Wallet </button>
 				)}
@@ -143,17 +154,20 @@ export default function Game({ params }: { params: { id: string } }) {
 				{authenticated && <button onClick={logout}> Disconnect </button>}
 			</div>
 			<div className="flex justify-between w-full mt-12 text-white">
-				<p> Stake Amount: {game?.stakeAmount + ' ETH'}</p>
+				<p className="px-3 py-1 rounded-md bg-white/10"> Stake Amount: {game?.stakeAmount + ' ETH'}</p>
 				<div>
-					<p> Required Balance to Start: {game?.balanceToStart + ' ETH'} </p>
-					<p> Current Balance: 0 ETH </p>
+					<p className="px-3 py-1 rounded-md bg-white/10"> Required Balance to Start: {game?.balanceToStart + ' ETH'} </p>
 				</div>
-				<p> Duration: {game?.duration + ' hours'} </p>
+				<p className="px-3 py-1 rounded-md bg-white/10"> Duration: {game?.duration + ' hours'} </p>
 			</div>
 			<div className="flex w-full mt-12 space-x-4 text-white">
 				<div className="w-1/2">
-					<p> Leaderboard </p>
-					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
+					<Leaderboard
+						players={
+							//@ts-ignore
+							game?.players ?? []
+						}
+					/>
 				</div>
 				<div className="w-1/2">
 					<p> Chat </p>
