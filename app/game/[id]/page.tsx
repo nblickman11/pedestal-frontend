@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { ethers } from 'ethers';
+import Home from '@/components/ui/Home';
 
 type Game = {
 	balanceToStart: number;
@@ -156,7 +157,7 @@ export default function Game({ params }: { params: { id: string } }) {
 				</div>
 				<div className="w-1/2">
 					<p> Chat </p>
-					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
+					<Home />
 				</div>
 			</div>
 			]
