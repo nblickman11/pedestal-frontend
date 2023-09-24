@@ -29,7 +29,7 @@ const ChatButton = ({ children }: { children: any }) => {
 			whileTap={{
 				scale: 0.9,
 			}}
-			className="p-4 mt-12 m-auto w-1/2 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
+			className="p-4 mt-12 m-auto w-1/2 rounded-lg bg-[#3B6D82] text-sm font-semibold text-white uppercase tracking-wider"
 		>
 			{children}
 		</motion.button>
