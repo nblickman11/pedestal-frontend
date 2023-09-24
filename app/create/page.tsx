@@ -11,9 +11,9 @@ import { useRouter } from 'next/navigation';
 export default function CreateGame() {
 	const [duration, setDuration] = useState(24);
 	const [gameName, setGameName] = useState('');
-	const [maxPlayers, setMaxPlayers] = useState(4);
-	const [stakeAmount, setStakeAmount] = useState(1);
-	const [balanceToStart, setBalanceToStart] = useState(1);
+	const [maxPlayers, setMaxPlayers] = useState(5);
+	const [stakeAmount, setStakeAmount] = useState(0.01);
+	const [balanceToStart, setBalanceToStart] = useState(0.01);
 
 	const router = useRouter();
 
