@@ -42,6 +42,7 @@ const Exchange = () => {
 
 	return (
 		<div>
+			<h1 className="m-auto mb-3 text-xs tracking-widest uppercase text-white/50">Exchange</h1>
 			{provider && (
 				<div className="flex items-center justify-center Uniswap">
 					<SwapWidget brandedFooter={false} hideConnectionUI theme={myDarkTheme} provider={provider} width={'100%'} jsonRpcUrlMap={jsonRpcUrlMap} />
