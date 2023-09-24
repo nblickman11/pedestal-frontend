@@ -170,7 +170,7 @@ export default function CreateGame() {
 									className="inline-block w-1/2 mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/10 focus-within:outline-none focus:outline-none active:outline-none"
 									placeholder="0.3"
 									type="number"
-									step={0.1}
+									step={0.01}
 									min={0}
 									value={stakeAmount}
 									onChange={(e) => {
@@ -199,7 +199,7 @@ export default function CreateGame() {
 									className="inline-block w-1/2 mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/10 focus-within:outline-none focus:outline-none active:outline-none"
 									placeholder="0.3"
 									type="number"
-									step={0.1}
+									step={0.01}
 									min={0}
 									value={balanceToStart}
 									onChange={(e) => {

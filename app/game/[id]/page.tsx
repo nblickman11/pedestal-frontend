@@ -93,6 +93,17 @@ export default function Game({ params }: { params: { id: string } }) {
 				console.log('Transaction confirmed:', receipt);
 
 				// call server to join game
+				const joiningEndpoint = endpoints.joinPlayer;
+
+				const { data } = await axios.put(joiningEndpoint, {
+					gameId: params.id,
+					primaryAddr: externalWallet?.address,
+					secondaryAddr: embeddedWallet?.address,
+				});
+
+				console.log('Player Joined:', data);
+
+				toast.success('Joined Game!');
 			} catch (error) {
 				console.error('Error sending transaction:', error);
 			}
