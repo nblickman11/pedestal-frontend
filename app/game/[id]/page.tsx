@@ -18,6 +18,7 @@ type Game = {
 	gameName: string;
 	maxPlayers: number;
 	players: [];
+	deposits: [];
 	stakeAmount: number;
 	updatedAt: string;
 };
@@ -33,7 +34,7 @@ const buttonHover = {
 };
 
 export default function Game({ params }: { params: { id: string } }) {
-	const { ready, authenticated, logout, createWallet } = usePrivy();
+	const { ready, authenticated, logout } = usePrivy();
 
 	const { login: privyLogin } = useLogin({
 		onComplete: async (user, isNewUser, wasAlreadyAuthenticated) => {
@@ -155,7 +156,7 @@ export default function Game({ params }: { params: { id: string } }) {
 					secondaryAddr: embeddedWallet?.address,
 				});
 
-				console.log('Player Deposit Completed:', data);
+				console.log('Player Deposit Completed:', data.data);
 				setGame(data.data);
 
 				toast.success('Deposit completed!');
@@ -184,6 +185,9 @@ export default function Game({ params }: { params: { id: string } }) {
 	// isAlreadyDeposited
 	//@ts-ignore
 	const isAlreadyDeposited = game?.deposits?.includes(embeddedWallet?.address);
+
+	console.log('isAlreadyJoined:', isAlreadyJoined);
+	console.log('isAlreadyDeposited:', isAlreadyDeposited);
 
 	return (
 		<main className="min-h-screen p-12 bg-black ">
@@ -271,7 +275,7 @@ export default function Game({ params }: { params: { id: string } }) {
 						}
 						className={`p-2 rounded-r-md bg-[#948a23] text-xs font-semibold text-white uppercase tracking-wider ${
 							// @ts-ignore
-							!isAlreadyJoined || isAlreadyDeposited ? 'cursor-not-allowed' : ''
+							isAlreadyJoined && isAlreadyDeposited ? 'cursor-not-allowed' : ''
 						}`}
 					>
 						Deposit

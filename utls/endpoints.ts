@@ -5,7 +5,7 @@ const endpoints = {
 	manageGame: `${baseURL}/manageGame`,
 	createPlayer: `${baseURL}/player/privy`,
 	joinPlayer: `${baseURL}/gamePlay/join`,
-	depositDone: `${baseURL}/gamePlay/deposit`,
+	depositDone: `${baseURL}/gamePlay/deposits`,
 };
 
 export default endpoints;
