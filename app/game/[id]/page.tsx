@@ -5,6 +5,7 @@ import { usePrivy, useLogin } from '@privy-io/react-auth';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 type Game = {
 	balanceToStart: number;
@@ -28,11 +29,20 @@ const buttonHover = {
 };
 
 export default function Game({ params }: { params: { id: string } }) {
-	const { authenticated, logout } = usePrivy();
+	const { authenticated, logout, createWallet } = usePrivy();
 
 	const { login: privyLogin } = useLogin({
 		onComplete: async (user, isNewUser, wasAlreadyAuthenticated) => {
-			console.log('LOGIN====', user, isNewUser, wasAlreadyAuthenticated);
+			const { id, wallet } = user;
+			console.log('USER====', id, wallet?.address);
+
+			const { data } = await axios.post(endpoints.createPlayer, {
+				primary: wallet?.address,
+				privyId: id,
+			});
+
+			console.log('Player Created', data);
+			toast.success('Logged In!');
 		},
 		onError: (error) => {
 			console.log(error);
@@ -52,12 +62,24 @@ export default function Game({ params }: { params: { id: string } }) {
 		fetchGame();
 	}, []);
 
+	const handleJoinGame = async () => {
+		// sends the transaction to the smart contract
+		// gets the tranasction hash
+		// creates a new wallet for the user
+		const newWallet = await createWallet();
+		console.log('New Wallet:', newWallet);
+
+		// sends this new wallet, transactionHash, gameId, primary address to the backend
+		// backend adds this user to the game with both the addresses
+	};
+
 	return (
 		<main className=" bg-black min-h-screen p-24">
 			<div className="text-white flex items-center justify-center space-x-4">
 				<h1 className="text-2xl uppercase">{game?.gameName}</h1>
 				{authenticated ? (
 					<motion.button
+						onClick={handleJoinGame}
 						whileTap={buttonClick}
 						whileHover={buttonHover}
 						className="p-2 rounded-lg bg-[#3B6D82] text-xs font-semibold text-white uppercase tracking-wider"
@@ -73,10 +95,13 @@ export default function Game({ params }: { params: { id: string } }) {
 			</div>
 			<div className="w-full text-white flex justify-between mt-12">
 				<p> Stake Amount: {game?.stakeAmount + ' ETH'}</p>
-				<p> Balance to Start: {game?.balanceToStart + ' ETH'} </p>
-				<p> Balance to Start: {game?.duration + ' hours'} </p>
+				<div>
+					<p> Required Balance to Start: {game?.balanceToStart + ' ETH'} </p>
+					<p> Current Balance: 0 ETH </p>
+				</div>
+				<p> Duration: {game?.duration + ' hours'} </p>
 			</div>
-			<div className="w-full flex space-x-4 text-white mt-6">
+			<div className="w-full flex space-x-4 text-white mt-12">
 				<div className="w-1/2">
 					<p> Leaderboard </p>
 					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
@@ -87,7 +112,7 @@ export default function Game({ params }: { params: { id: string } }) {
 				</div>
 			</div>
 			]
-			<div className="w-full flex space-x-4 text-white mt-6">
+			<div className="w-full flex space-x-4 text-white mt-12">
 				<div className="w-1/2">
 					<p> Exchange </p>
 					<div className="w-full h-[500px] bg-white/10 rounded-md mt-2"></div>
