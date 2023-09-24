@@ -266,16 +266,16 @@ export default function Game({ params }: { params: { id: string } }) {
 							isAlreadyJoined
 								? isAlreadyDeposited
 									? () => {
-											toast.error('Deposit complete');
+											toast.success('Deposit complete');
 									  }
 									: handlePlayingDeposit
 								: () => {
 										toast.error('You are not playing this game');
 								  }
 						}
-						className={`p-2 rounded-r-md bg-[#948a23] text-xs font-semibold text-white uppercase tracking-wider ${
+						className={`p-2 rounded-r-md text-xs font-semibold text-white uppercase tracking-wider ${
 							// @ts-ignore
-							isAlreadyJoined && isAlreadyDeposited ? 'cursor-not-allowed' : ''
+							isAlreadyJoined && isAlreadyDeposited ? 'cursor-not-allowed bg-[#115d40]' : 'bg-[#948a23]'
 						}`}
 					>
 						Deposit
