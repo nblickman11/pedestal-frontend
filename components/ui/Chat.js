@@ -60,7 +60,7 @@ const Chat = ({ client, messageHistory, conversation }) => {
 					onKeyUp={handleInputChange}
 					onChange={handleInputChange}
 					value={inputValue}
-					placeholder="Type your text here "
+					placeholder="Type a message..."
 				/>
 				<button className={'bg-white p-4 rounded-md'} onClick={handleSend}>
 					&#128073;

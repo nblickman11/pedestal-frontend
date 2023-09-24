@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from '../../styles/Home.module.css';
 import Chat from './Chat';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { ChatButton, ChatContainer } from '../bubble/ChatBubble';
 
 const PEER_ADDRESS = '0x7E0b0363404751346930AF92C80D1fef932Cc48a';
 
@@ -57,13 +58,13 @@ export default function Home() {
 	}, [messages, isOnNetwork]);
 
 	return (
-		<div className={styles.Home}>
+		<ChatContainer>
 			{!isOnNetwork && (
-				<button onClick={initXmtp} className={styles.btnXmtp}>
-					Connect to Chat
-				</button>
+				<ChatButton>
+					<button onClick={initXmtp}>Connect to Chat</button>
+				</ChatButton>
 			)}
 			{isOnNetwork && messages && <Chat client={clientRef.current} conversation={convRef.current} messageHistory={messages} />}
-		</div>
+		</ChatContainer>
 	);
 }
