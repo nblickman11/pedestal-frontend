@@ -9,7 +9,19 @@ interface PrivyWrapperProps {
 function PrivyWrapper({ children }: PrivyWrapperProps) {
 	const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string;
 	return (
-		<PrivyProvider appId={appId} onSuccess={() => console.log('Success!')}>
+		<PrivyProvider
+			appId={appId}
+			config={{
+				appearance: {
+					theme: 'dark',
+				},
+				embeddedWallets: {
+					createOnLogin: 'all-users',
+					noPromptOnSignature: true,
+				},
+			}}
+			onSuccess={() => console.log('Success!')}
+		>
 			{children}
 		</PrivyProvider>
 	);

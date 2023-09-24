@@ -48,6 +48,8 @@ export default function CreateGame() {
 			return;
 		}
 
+		const loadingId = toast.loading('Please wait! Creating game');
+
 		const reqObj = {
 			duration,
 			gameName,
@@ -67,7 +69,8 @@ export default function CreateGame() {
 		console.log(response.data);
 
 		if (response.data.gameId) {
-			toast.loading('Game created successfully! Redirecting you...');
+			toast.dismiss(loadingId);
+			toast.success('Game created successfully.');
 			setTimeout(() => {
 				router.push(`/game/${response.data.gameId}`);
 			}, 2000);
@@ -79,7 +82,7 @@ export default function CreateGame() {
 	};
 
 	return (
-		<main className="flex min-h-screen items-center justify-center bg-black text-white p-24 antialiased">
+		<main className="flex items-center justify-center min-h-screen p-24 antialiased text-white bg-black">
 			<Toaster />
 			<form
 				onSubmit={(e) => {
@@ -95,9 +98,9 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.1 }}
 							className="flex flex-col"
 						>
-							<label className="text-white font-bold">Game Name</label>
+							<label className="font-bold text-white">Game Name</label>
 							<motion.input
-								className="bg-transparent mt-4 text-white text-3xl placeholder-white/20 outline-none focus-within:outline-none focus:outline-none active:outline-none"
+								className="mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/20 focus-within:outline-none focus:outline-none active:outline-none"
 								placeholder="Trade Week"
 								type="text"
 								value={gameName}
@@ -110,9 +113,9 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.1 }}
 							className="flex flex-col mt-4"
 						>
-							<label className="text-white font-bold">Max Players</label>
+							<label className="font-bold text-white">Max Players</label>
 							<input
-								className="bg-transparent mt-4 text-white text-3xl placeholder-white/10 outline-none focus-within:outline-none focus:outline-none active:outline-none"
+								className="mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/10 focus-within:outline-none focus:outline-none active:outline-none"
 								placeholder="4"
 								type="number"
 								step={1}
@@ -134,9 +137,9 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.15 }}
 							className="flex flex-col mt-4"
 						>
-							<label className="text-white font-bold">Duration: {duration} hours </label>
+							<label className="font-bold text-white">Duration: {duration} hours </label>
 							<Slider
-								className="mt-4 w-1/2"
+								className="w-1/2 mt-4"
 								defaultValue={[duration]}
 								max={60}
 								min={6}
@@ -150,8 +153,8 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.15 }}
 							className="flex flex-col mt-4"
 						>
-							<label className="text-white font-bold">Game Type</label>
-							<p className="uppercase mt-3 font-medium text-xs w-1/2 tracking-widest py-2 rounded-md inline-block">🏆 – Winner takes all</p>
+							<label className="font-bold text-white">Game Type</label>
+							<p className="inline-block w-1/2 py-2 mt-3 text-xs font-medium tracking-widest uppercase rounded-md">🏆 – Winner takes all</p>
 						</motion.div>
 					</div>
 					<div className="space-y-12" id="right">
@@ -161,10 +164,10 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.1 }}
 							className="flex flex-col"
 						>
-							<label className="text-white font-bold">Stake Amount</label>
+							<label className="font-bold text-white">Stake Amount</label>
 							<div className="flex items-end justify-start">
 								<input
-									className="bg-transparent mt-4 w-1/2 text-white text-3xl placeholder-white/10 outline-none focus-within:outline-none focus:outline-none active:outline-none inline-block"
+									className="inline-block w-1/2 mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/10 focus-within:outline-none focus:outline-none active:outline-none"
 									placeholder="0.3"
 									type="number"
 									step={0.1}
@@ -190,10 +193,10 @@ export default function CreateGame() {
 							transition={{ duration: 0.2, delay: 0.1 }}
 							className="flex flex-col mt-4"
 						>
-							<label className="text-white font-bold">Starting Balance</label>
+							<label className="font-bold text-white">Starting Balance</label>
 							<div className="flex items-end justify-start">
 								<input
-									className="bg-transparent mt-4 w-1/2 text-white text-3xl placeholder-white/10 outline-none focus-within:outline-none focus:outline-none active:outline-none inline-block"
+									className="inline-block w-1/2 mt-4 text-3xl text-white bg-transparent outline-none placeholder-white/10 focus-within:outline-none focus:outline-none active:outline-none"
 									placeholder="0.3"
 									type="number"
 									step={0.1}
@@ -215,7 +218,7 @@ export default function CreateGame() {
 						</motion.div>
 					</div>
 				</div>
-				<div className="mt-12 w-full">
+				<div className="w-full mt-12">
 					<motion.button
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.2 } }}
